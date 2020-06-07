@@ -15,6 +15,7 @@ func main() {
 
 	router := &mux.Router{}
 	router.HandleFunc("/namespaces", namespaceBase.GetNamespaces).Methods("GET")
+	router.HandleFunc("/pods/{namespace}", namespaceBase.GetPods).Methods("GET")
 
 	http.ListenAndServe(":9090", router)
 }
