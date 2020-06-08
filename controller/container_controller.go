@@ -40,3 +40,12 @@ func (bh *BaseHandler) GetPods(w http.ResponseWriter, r *http.Request) {
 	}
 	configs.JSON(w, pods)
 }
+
+func (bh *BaseHandler) DeletePod(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	podName := vars["podsName"]
+	namespace := vars["namespace"]
+	bh.kubeConf.GetClientSet().CoreV1().Pods(namespace).Delete(context.TODO(), podName, metav1.DeleteOptions{})
+	status := "Success"
+	configs.JSON(w, status)
+}
