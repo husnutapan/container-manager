@@ -1,0 +1,39 @@
+<p-panel header=" Namespaces" *ngIf="namespacesList">
+  <p-dropdown [options]="namespacesList" [(ngModel)]="selectedNamespaces" optionLabel="name"
+              (onChange)="getDatatable()" placeholder="Select a Namespace" [showClear]="true"></p-dropdown>
+</p-panel>
+
+<div class="ui-g">
+  <div class="ui-g-12">
+    <p-table [value]="podList" *ngIf="datatableRendered">
+      <ng-template pTemplate="header">
+        <tr *ngIf="podList?.length>0">
+          <th>Name</th>
+          <th>Host Ip</th>
+          <th>Pod Ip</th>
+          <th>Process</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-val>
+        <tr>
+          <td>{{val.name}}</td>
+          <td>{{val.hostIp}}</td>
+          <td>{{val.podIp}}</td>
+          <td>
+            <button type="button" pButton label="Kill" (click)="kill(val)" class="ui-button-danger"
+                    *ngIf="podList?.length>0" style="position: center"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td [attr.colspan]="columns?.length">
+            No Pod Found
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+
