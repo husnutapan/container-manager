@@ -20,6 +20,8 @@ func NewBaseHandler(conf *configs.ClientConfig) *BaseHandler {
 }
 
 func (bh *BaseHandler) GetNamespaces(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	var namespaces []models.Namespaces
 	list, _ := bh.kubeConf.GetClientSet().CoreV1().Namespaces().List(context.TODO(), metav1.ListOptions{})
 	for _, item := range list.Items {
@@ -30,6 +32,8 @@ func (bh *BaseHandler) GetNamespaces(w http.ResponseWriter, r *http.Request) {
 }
 
 func (bh *BaseHandler) GetPods(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	var pods []models.Pod
 	vars := mux.Vars(r)
 	namespace := vars["namespace"]
@@ -42,6 +46,8 @@ func (bh *BaseHandler) GetPods(w http.ResponseWriter, r *http.Request) {
 }
 
 func (bh *BaseHandler) DeletePod(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	vars := mux.Vars(r)
 	podName := vars["podsName"]
 	namespace := vars["namespace"]
