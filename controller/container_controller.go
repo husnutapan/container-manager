@@ -39,7 +39,7 @@ func (bh *BaseHandler) GetPods(w http.ResponseWriter, r *http.Request) {
 	namespace := vars["namespace"]
 	list, _ := bh.kubeConf.GetClientSet().CoreV1().Pods(namespace).List(context.TODO(), metav1.ListOptions{})
 	for _, item := range list.Items {
-		pod := models.Pod{Name: item.ObjectMeta.Name}
+		pod := models.Pod{Name: item.ObjectMeta.Name, HostIP: item.Status.HostIP, PodIP: item.Status.PodIP}
 		pods = append(pods, pod)
 	}
 	configs.JSON(w, pods)
